@@ -2,7 +2,9 @@ var express = require('express'),
 	app 	= express();
 
 app.get('/', function(req, res) {
-	res.send('hello world');
+	res.render('index.jade', {
+		title: "Hello Express & Jade"
+	});
 });
 
 app.listen(3000, function() {
