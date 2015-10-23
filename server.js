@@ -1,15 +1,24 @@
 var express = require('express'),
+		bodyParser = require('body-parser'),
 		app 	= express();
 
-app.param('name', function (req, res, next, name) {
-	req.name = name[0].toUpperCase() + name.substring(1);
-	next();
-});
+app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/name/:name', function (req, res) {
-	res.send('Your name is ' + req.name);
-});
+var names = [];
 
-app.listen(3000, function() {
+app.route('/')
+		.all(function (req, res, next) {
+			console.log('this logs on all VERBs:');
+			next();
+		})
+		.get(function (req, res) {
+			res.render('index.jade', { names: names });
+		})
+		.post(function (req, res) {
+			names.push(req.body.name);
+			res.redirect('/');
+		});
+
+app.listen(3000, function () {
 	console.log('listening on port 3000');
 });
