@@ -3,23 +3,26 @@ var express = require('express'),
 		app 	= express();
 
 app.get('/', function (req, res) {
-	
-	req.params.ATTR;
-	req.query.ATTR;
-	req.body.ATTR;
 
-	req.param.('ATTR'); // chech in order: params, body. and then query..
+	res.status(200);
+	res.set(header, value); // to set any header
+	res.get(header);
 
-	req.route;
-	req.originalUrl;
+	res.cookie(name, value);
+	res.clearCookie(name);
 
-	req.cookies.ATTR;
-	req.get(); // any header name
-	req.accepts('text/html'); // application/json, text/plain
+	res.redirect(status, path);
+	res.send(status, text);
+	res.json(status, object);
+	res.jsonp(status, object); // wraps object in a callback({})
+	res.download(file);
 
-	// Complete list of Request Objects:
-	// http://expressjs.com/4x/api.html#req	
+	res.render(file, properties, function (err, html) {
+		res.send(200, html);	
+	});
 
+	// Complete list of Response Objects
+	// http://expressjs.com/4x/api.html#res
 });
 
 app.listen(3000, function () {
