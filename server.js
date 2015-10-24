@@ -2,22 +2,28 @@ var express = require('express'),
 		bodyParser = require('body-parser'),
 		app 	= express();
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// Router Object
+// - use
+// - param
+// - verb / all
+// - route
 
-var names = [];
+var router = express.Router();
 
-app.route('/')
-		.all(function (req, res, next) {
-			console.log('this logs on all VERBs:');
-			next();
-		})
-		.get(function (req, res) {
-			res.render('index.jade', { names: names });
-		})
-		.post(function (req, res) {
-			names.push(req.body.name);
-			res.redirect('/');
-		});
+router.use(function (req, res, next) {
+	console.log('router specific middleware');
+	next();
+});
+
+router.get('/', function (req, res) {
+	res.send('router home route');
+});
+
+router.route('/test').get(function (req, res) {
+	res.send('router test route');
+});
+
+app.use('/api', router);
 
 app.listen(3000, function () {
 	console.log('listening on port 3000');
