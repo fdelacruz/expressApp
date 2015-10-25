@@ -4,25 +4,17 @@ var express = require('express'),
 
 app.get('/', function (req, res) {
 
-	res.status(200);
-	res.set(header, value); // to set any header
-	res.get(header);
-
-	res.cookie(name, value);
-	res.clearCookie(name);
-
-	res.redirect(status, path);
-	res.send(status, text);
-	res.json(status, object);
-	res.jsonp(status, object); // wraps object in a callback({})
-	res.download(file);
-
-	res.render(file, properties, function (err, html) {
-		res.send(200, html);	
+	res.format({
+		'text/plain': function () {
+			res.send('text response');
+		},
+		'text/html': function () {
+			res.render('index.jade');
+		},
+		'application/json': function () {
+			res.json({ topic: 'Express' });
+		}
 	});
-
-	// Complete list of Response Objects
-	// http://expressjs.com/4x/api.html#res
 });
 
 app.listen(3000, function () {
